@@ -14,7 +14,6 @@ import (
 	"unicode/utf8"
 
 	"github.com/gorilla/mux"
-	"google.golang.org/genproto/googleapis/spanner/admin/database/v1"
 
 	_ "github.com/go-sql-driver/mysql"
 )

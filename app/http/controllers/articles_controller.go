@@ -1,13 +1,15 @@
 package controllers
 
 import (
-	"database/sql"
 	"fmt"
+	"goblog/app/models/article"
 	"goblog/pkg/logger"
 	"goblog/pkg/route"
 	"goblog/pkg/types"
 	"net/http"
 	"text/template"
+
+	"gorm.io/gorm"
 )
 
 type ArticlesController struct {
@@ -18,14 +20,14 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 
 	// 2.读取对应的文章数据
-	article, err := getArticleByID(id)
+	article, err := article.Get(id)
 
 	// 3.如果出现错误
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if err == gorm.ErrRecordNotFound {
 			// 3.1 数据未找到
 			w.WriteHeader(http.StatusNotFound)
-			fmt.Fprint(w, "404")
+			fmt.Fprint(w, "404 文章未找到")
 		} else {
 			// 3.2 数据库错误
 			logger.LogError(err)
