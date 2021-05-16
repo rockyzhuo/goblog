@@ -12,6 +12,7 @@ func Get(idstr string) (Article, error) {
 	if err := model.DB.First(&article, id).Error; err != nil {
 		return article, err
 	}
+
 	return article, nil
 }
 
@@ -41,5 +42,15 @@ func (article *Article) Update() (rowsAffected int64, err error) {
 		logger.LogError(err)
 		return 0, err
 	}
+	return result.RowsAffected, nil
+}
+
+func (article *Article) Delete() (rowsAffected int64, err error) {
+	result := model.DB.Delete(&article)
+	if err = result.Error; err != nil {
+		logger.LogError(err)
+		return 0, err
+	}
+
 	return result.RowsAffected, nil
 }
