@@ -219,7 +219,7 @@ func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 		if len(errors) == 0 {
 			// 4.2 表单验证通过，更新数据
 			_article.Title = title
-			_article.body = body
+			_article.Body = body
 			rowsAffected, err := _article.Update()
 
 			if err != nil {
